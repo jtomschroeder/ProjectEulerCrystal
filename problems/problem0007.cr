@@ -19,8 +19,6 @@ end
 
 primes = [] of Int32
 
-sieve.each_with_index do |prime, number|
-  primes << number if prime
-end
+sieve.each_with_index { |prime, number| primes << number if prime }
 
 puts primes[10_000] # => 104743

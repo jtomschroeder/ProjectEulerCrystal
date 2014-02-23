@@ -1,8 +1,10 @@
 # The prime factors of 13195 are 5, 7, 13 and 29.
 # What is the largest prime factor of the number 600851475143?
 
+require "helpers"
+
 def first_factor(x)
-  (2_u64..x).each { |i| return i if x % i == 0 }
+  (2_u64..x).each { |i| return i if x.divisible_by?(i) }
   return 0_u64
 end
 
