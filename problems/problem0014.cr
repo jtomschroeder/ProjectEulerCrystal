@@ -14,18 +14,18 @@ def perform_chain(lookup, num)
     chain_len = if num.even?
       perform_chain(lookup, num / 2) + 1
     else
-      perform_chain(lookup, 3 * num + 1) + 1
+      perform_chain(lookup, 3_u64 * num + 1) + 1
     end
     lookup[num] = chain_len
   end
   return lookup[num]
 end
 
-chain_lookup = {1 => 1}
+chain_lookup = {1_u64 => 1}
 
-(2..1_000_000).each { |i| perform_chain(chain_lookup, i) }
+(2_u64..1_000_000).each { |i| perform_chain(chain_lookup, i) }
 
 longest_chain_key = 1
 chain_lookup.each { |key, value| longest_chain_key = key if value > chain_lookup[longest_chain_key] }
 
-puts longest_chain_key
+puts longest_chain_key # => 837799
