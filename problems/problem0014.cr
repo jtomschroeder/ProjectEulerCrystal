@@ -7,7 +7,7 @@
 # Which starting number, under one million, produces the longest chain?
 # NOTE: Once the chain starts the terms are allowed to go above one million.
 
-require "helpers"
+require "problem"
 
 def perform_chain(lookup, num)
   if !lookup.has_key?(num)
@@ -21,11 +21,16 @@ def perform_chain(lookup, num)
   return lookup[num]
 end
 
-chain_lookup = {1_u64 => 1}
+problem 14 do
+  code do
+    chain_lookup = {1_u64 => 1}
 
-(2_u64..1_000_000).each { |i| perform_chain(chain_lookup, i) }
+    (2_u64..1_000_000).each { |i| perform_chain(chain_lookup, i) }
 
-longest_chain_key = 1
-chain_lookup.each { |key, value| longest_chain_key = key if value > chain_lookup[longest_chain_key] }
+    longest_chain_key = 1
+    chain_lookup.each { |key, value| longest_chain_key = key if value > chain_lookup[longest_chain_key] }
 
-puts longest_chain_key # => 837799
+    longest_chain_key
+  end
+  expect 837799
+end

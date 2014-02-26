@@ -5,8 +5,11 @@
 # Hence the difference between the sum of the squares of the first ten natural numbers and the square of the sum is 3025 - 385 = 2640.
 # Find the difference between the sum of the squares of the first one hundred natural numbers and the square of the sum.
 
-x = (1..100).inject(0) { |mem, var| mem += var * var }
+require "problem"
 
-y = (1..100).inject(0) { |mem, var| mem += var } ** 2
-
-puts y - x # => 25164150
+problem 6 do
+  code do
+    (1..100).inject(0) { |mem, var| mem += var } ** 2 - (1..100).inject(0) { |mem, var| mem += var * var }
+  end
+  expect 25164150
+end

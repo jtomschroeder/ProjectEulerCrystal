@@ -15,17 +15,21 @@
 #
 # What is the value of the first triangle number to have over five hundred divisors?
 
-require "helpers"
+require "problem"
 
-triangles = [1_u64]
-i = 2
-loop do
-  tri = triangles.last + i
-  triangles << tri
-  count = 0
-  (1..Math.sqrt(tri)).each { |j| count += 1 if tri.divisible_by? j }
-  break if count * 2 > 500
-  i += 1
+problem 12 do
+  code do
+    triangles = [1_u64]
+    i = 2
+    loop do
+      tri = triangles.last + i
+      triangles << tri
+      count = 0
+      (1..Math.sqrt(tri)).each { |j| count += 1 if tri.divisible_by? j }
+      break if count * 2 > 500
+      i += 1
+    end
+    triangles.last
+  end
+  expect 76576500
 end
-
-puts triangles.last

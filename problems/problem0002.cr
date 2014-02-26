@@ -4,13 +4,17 @@
 # By considering the terms in the Fibonacci sequence whose values do not exceed four million,
 # find the sum of the even-valued terms.
 
-require "helpers"
+require "problem"
 
-fibonacci = [1, 2]
-loop do
-  next_fib = (fibonacci[fibonacci.length - 1] + fibonacci[fibonacci.length - 2])
-  break unless next_fib < 4_000_000
-  fibonacci << next_fib
+problem 2 do
+  code do
+    fibonacci = [1, 2]
+    loop do
+      next_fib = (fibonacci[-1] + fibonacci[-2])
+      break unless next_fib < 4_000_000
+      fibonacci << next_fib
+    end
+    fibonacci.select { |i| i.even? }.sum
+  end
+  expect 4613732
 end
-
-puts fibonacci.select { |i| i.even? }.inject(0) { |sum, i| sum += i } # => 4613732
