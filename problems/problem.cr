@@ -12,7 +12,8 @@ class Problem
 end
 
 def problem(number)
-  print "Problem #{number}: "
+  #print "Problem #{number}: "
+  print "Problem %04d: " % number
   problem = Problem.new
 
   begin
