@@ -1,5 +1,5 @@
 
-struct Bignum
+class Bignum
 
   def initialize(num = 0)
     @num_array = [] of Int32
@@ -13,23 +13,52 @@ struct Bignum
     end
   end
 
+  def initialize(@num_array : Array(Int32))
+  end
+
   def *(num : Number)
     overflow = 0
-    @num_array.map! do |n|
+    ary = @num_array.map do |n|
       tmp = n * num + overflow
       overflow = tmp / 10
       tmp % 10
     end
 
     while overflow > 0
-      @num_array << overflow % 10
+      ary << overflow % 10
       overflow /= 10
     end
-    self
+    Bignum.new(ary)
   end
 
   def *(num : Bignum)
     self * num.to_i # TODO: this isn't good but oh well
+  end
+
+  def +(num : Bignum)
+    num_digits = num.digits
+    ary = @num_array.clone
+
+    while ary.length < num_digits.length
+      ary << 0 
+    end
+    while ary.length > num_digits.length
+      num_digits << 0 
+    end
+
+    overflow = 0
+    ary = num_digits.map_with_index do |n, i|
+      tmp = n + @num_array[i] + overflow
+      overflow = tmp / 10
+      tmp % 10
+    end
+
+    while overflow > 0
+      ary << overflow % 10
+      overflow /= 10
+    end
+
+    Bignum.new(ary)
   end
 
   def to_i
@@ -45,11 +74,6 @@ struct Bignum
   end
 
   def digits
-    @num_array.reverse
+    @num_array.clone
   end
-
 end
-
-#fact = Bignum.new(1)
-#2.upto(30) { |i| fact *= i }
-#puts fact.digits
