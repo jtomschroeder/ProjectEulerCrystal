@@ -2,22 +2,13 @@
 # What is the sum of the digits of the number 2^1000?
 
 require "problem"
+require "bignum"
 
 problem 16 do
   code do
-    bignum = [1]
-
-    1000.times do
-      overflow = 0
-      bignum.map! do |n|
-        tmp = n * 2 + overflow
-        overflow = tmp / 10
-        tmp % 10
-      end
-      bignum << overflow if overflow > 0
-    end
-
-    bignum.sum
+    bignum = Bignum.new(1)
+    1000.times { bignum *= 2 }
+    bignum.digits.sum
   end
   expect 1366
 end
