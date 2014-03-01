@@ -10,15 +10,15 @@ require "problem"
 
 problem 21 do
   code do
-    proper_divisors = [] of Int32
+    divisor_sums = [] of Int32
     0.upto(10_000) do |i|
       divisors = [] of Int32
       1.upto(i - 1) { |j| divisors << j if i % j == 0 }
-      proper_divisors << divisors.sum
+      divisor_sums << divisors.sum
     end
     sum = 0
-    len = proper_divisors.length
-    proper_divisors.each_with_index { |n, i| sum += i if n < len && n != i && proper_divisors[n] == i }
+    len = divisor_sums.length
+    divisor_sums.each_with_index { |n, i| sum += i if n < len && n != i && divisor_sums[n] == i } # n != i excludes "perfect numbers"
     sum
   end
   expect 31626
